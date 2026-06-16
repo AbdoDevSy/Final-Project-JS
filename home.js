@@ -1,28 +1,28 @@
- const baseURL = 'http://127.0.0.1:8000/api';
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        }
+const baseURL = 'http://127.0.0.1:8000/api';
+const config = {
+    headers: {
+        'Content-Type': 'application/json',
     }
+}
 
-    const params = {
-        params: {
-            'limit': 50
-        }
+const params = {
+    params: {
+        'limit': 50
     }
-    // get posts
-    axios.get(`${baseURL}/posts`, config, params)
-        .then(response => {
-            let posts= response.data.data;
-            const postsContainer = document.getElementById('posts');
-            postsContainer.innerHTML = '';
-            for(post of posts){ 
-                postsContainer.innerHTML += 
+}
+// get posts
+axios.get(`${baseURL}/posts`, config, params)
+    .then(response => {
+        let posts = response.data.data;
+        const postsContainer = document.getElementById('posts');
+        postsContainer.innerHTML = '';
+        for (post of posts) {
+            postsContainer.innerHTML +=
                 `<div class="card mb-3 shadow" id ="post">
                 <h5 class="card-header">
                     <img src="${post.user.image_url}" alt="" class="rounded-circle border border-2" width="40px"
                         height="40px">
-                    <b class="">@${post.username}</b>
+                    <b class="">@${post.user.username}</b>
                 </h5>
                 <div class="card-body">
                     <img class="w-100 rounded" src="${post.image_url}" alt="">
@@ -42,29 +42,39 @@
                 </div>
 
             </div>`
-            }
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+function loginBtnClicked() {
+    const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
+    console.log(email, password);
+    axios.post(`${baseURL}/login`, {
+        email: email,
+        password: password
+    })
+        .then(response => {
+            console.log(response.data.token);
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            const loginModel = document.getElementById('login-model');
+            const modal = bootstrap.Modal.getInstance(loginModel);
+            showToast('Logged in successfully', 'success');
+            modal.hide();
+
         })
         .catch(error => {
             console.error(error);
         });
+}
 
-        function loginBtnClicked(){
-            const email = document.getElementById('email-input').value;
-            const password = document.getElementById('password-input').value;
-            console.log(email, password);
-            axios.post(`${baseURL}/login`, {
-                email: email,
-                password: password
-            })
-            .then(response => {
-                console.log(response.data.token);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-                const loginModel = document.getElementById('login-model');
-                const modal = bootstrap.Modal.getInstance(loginModel);
-                modal.hide();
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        }
+function showToast(message, type) {
+    const toastLive = document.getElementById('liveToast')
+    toastLive.querySelector('.toast-body').textContent = message;
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive)
+    toastBootstrap.show()
+}
+

@@ -29,11 +29,11 @@
                     <form>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" id="email-input">
+                            <input type="email" class="form-control" id="email-input" value="yarob.hm@gmail.com">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Password:</label>
-                            <input type="password" class="form-control" id="password-input">
+                            <input type="password" class="form-control" id="password-input" value="HelloWorld">
                         </div>
                     </form>
                 </div>
@@ -45,6 +45,23 @@
         </div>
     </div>
     <!--// LOGIN MODEL //-->
+
+    <!-- Toast -->
+    <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3" style="background-color: violet;"> -->
+
+        <div id="liveToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: violet;">
+            <div class="d-flex">
+                <div class="toast-body">
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+
+    <!-- </div> -->
+
+    </div>
+    </div>
+    <!--// Toast //-->
     <!--// MODELS //-->
 
     <!-- navbar -->
@@ -68,7 +85,8 @@
 
                     </ul>
                     <div class="d-flex w-100 justify-content-end">
-                        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#login-model" data-bs-whatever="@mdo">Login</button>
+                        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal"
+                            data-bs-target="#login-model" data-bs-whatever="@mdo">Login</button>
                         <button type="button" class="btn btn-success">Register</button>
                     </div>
         </nav>
