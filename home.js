@@ -2,6 +2,7 @@ const baseURL = 'http://127.0.0.1:8000/api';
 const config = {
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
     }
 }
 
@@ -10,6 +11,25 @@ const params = {
         'limit': 50
     }
 }
+setupUI();
+
+function setupUI() {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (token && user) {
+        // User is logged in
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('register-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'flex';
+    }else {
+        // User is not logged in
+        document.getElementById('login-btn').style.display = 'flex';
+        document.getElementById('register-btn').style.display = 'flex';
+        document.getElementById('logout-btn').style.display = 'none';
+    }
+
+}
+
 // get posts
 axios.get(`${baseURL}/posts`, config, params)
     .then(response => {
@@ -71,6 +91,13 @@ function loginBtnClicked() {
             modal.hide();
             showToast('Failed to log in', 'failed');
         });
+}
+
+function logoutBtnClicked() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setupUI();
+    showToast('Logged out successfully', 'success');
 }
 
 function showToast(message, type) {

@@ -49,13 +49,13 @@
     <!-- Toast -->
     <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3" style="background-color: violet;"> -->
 
-        <div id="liveToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div id="liveToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
             </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+    </div>
 
     <!-- </div> -->
 
@@ -85,9 +85,11 @@
 
                     </ul>
                     <div class="d-flex w-100 justify-content-end">
-                        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal"
+                        <button type="button" id="login-btn" class="btn btn-success mx-2" data-bs-toggle="modal"
                             data-bs-target="#login-model" data-bs-whatever="@mdo">Login</button>
-                        <button type="button" class="btn btn-success">Register</button>
+                        <button type="button" id="register-btn" class="btn btn-success">Register</button>
+                        <button type="button" id="logout-btn" class="btn btn-danger" style="display: none;"
+                            onclick="logoutBtnClicked()">Logout</button>
                     </div>
         </nav>
     </div>
