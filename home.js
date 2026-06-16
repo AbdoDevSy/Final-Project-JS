@@ -49,6 +49,8 @@ axios.get(`${baseURL}/posts`, config, params)
     });
 
 function loginBtnClicked() {
+    const loginModel = document.getElementById('login-model');
+    const modal = bootstrap.Modal.getInstance(loginModel);
     const email = document.getElementById('email-input').value;
     const password = document.getElementById('password-input').value;
     console.log(email, password);
@@ -60,20 +62,21 @@ function loginBtnClicked() {
             console.log(response.data.token);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
-            const loginModel = document.getElementById('login-model');
-            const modal = bootstrap.Modal.getInstance(loginModel);
             showToast('Logged in successfully', 'success');
             modal.hide();
 
         })
         .catch(error => {
             console.error(error);
+            modal.hide();
+            showToast('Failed to log in', 'failed');
         });
 }
 
 function showToast(message, type) {
     const toastLive = document.getElementById('liveToast')
     toastLive.querySelector('.toast-body').textContent = message;
+    toastLive.style.backgroundColor = type === 'success' ? 'green' : 'red';
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive)
     toastBootstrap.show()
 }
