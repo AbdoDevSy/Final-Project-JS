@@ -21,7 +21,7 @@ function setupUI() {
         document.getElementById('login-btn').style.display = 'none';
         document.getElementById('register-btn').style.display = 'none';
         document.getElementById('logout-btn').style.display = 'flex';
-    }else {
+    } else {
         // User is not logged in
         document.getElementById('login-btn').style.display = 'flex';
         document.getElementById('register-btn').style.display = 'flex';
@@ -89,10 +89,38 @@ function loginBtnClicked() {
         .catch(error => {
             console.error(error);
             modal.hide();
-            showToast('Failed to log in', 'failed');
+            showToast(`${error.response.data.message}`, 'failed');
         });
 }
 
+function registerBtnClicked() {
+    const registerModel = document.getElementById('register-model');
+    const modal = bootstrap.Modal.getInstance(registerModel);
+    const username = document.getElementById('username-input').value;
+    const name = document.getElementById('name-input').value;
+    const email = document.getElementById('register-email-input').value;
+    const password = document.getElementById('register-password-input').value;
+    console.log(username, name, email, password);
+    axios.post(`${baseURL}/register`, {
+        username: username,
+        name: name,
+        email: email,
+        password: password
+    })
+        .then(response => {
+            console.log(response.data.token);
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+            showToast('Registered successfully', 'success');
+            modal.hide();
+
+        })
+        .catch(error => {
+            console.error(error);
+            modal.hide();
+            showToast(`${error.response.data.message}`, 'failed');
+        });
+}
 function logoutBtnClicked() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
